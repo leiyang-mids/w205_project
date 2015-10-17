@@ -1,5 +1,7 @@
+# segments - string array given by getSegmentsInSquare
+
 # retrieve segment stream
-def getSegmentStreams(segments):
+def getSegmentStreams(client, segments):
     ids = []
     streams = []
     for seg in segments:
