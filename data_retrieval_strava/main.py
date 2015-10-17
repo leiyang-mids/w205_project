@@ -32,7 +32,7 @@ if (not os.path.isfile(file_activity)):
 lat1, lon1, lat2, lon2 = 38.790184, -107.567708, 40.719907, -104.376179  # Denver, CO
 
 # 2. divide the range into a grid for scan
-n = 10
+n = 20
 del_lat, del_lon = (lat2-lat1)/n, (lon2-lon1)/n
 grids = []
 for i in range(n):
