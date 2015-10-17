@@ -42,7 +42,7 @@ for i in range(n):
 # 3. retrieve and save info in each grid
 for i in range(n*n):
 	try:
-		print 'retrieving in: ' + str(grids[i])
+		print 'retrieving %s/%s: %s' %(i+1, n*n, str(grids[i]))
 		segments, o_seg = getSegmentsInSquare(client, grids[i])
 		leaderboard, attempts = getLeaderBoardAttempts(o_seg)
 		seg_streams = getSegmentStreams(client, segments)
