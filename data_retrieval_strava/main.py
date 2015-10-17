@@ -12,7 +12,6 @@ from getSegmentStreams import *
 #from getActivityStreams import *
 from saveArrayToCSV import *
 # setup
-global client
 execfile("setup.py")
 
 # open a file
@@ -29,7 +28,8 @@ if (not os.path.isfile(file_activity)):
 
 # retrieve info
 # 1. specify geo range for a city/place
-lat1, lon1, lat2, lon2 = 30.091243, -97.988489, 30.617396, -97.433679  # Austin, TX
+#lat1, lon1, lat2, lon2 = 30.091243, -97.988489, 30.617396, -97.433679  # Austin, TX
+lat1, lon1, lat2, lon2 = 38.790184, -107.567708, 40.719907, -104.376179  # Denver, CO
 
 # 2. divide the range into a grid for scan
 n = 10
