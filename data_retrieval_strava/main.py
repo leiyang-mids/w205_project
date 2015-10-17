@@ -41,15 +41,18 @@ for i in range(n):
 
 # 3. retrieve and save info in each grid
 for i in range(n*n):
-	print 'retrieving in: ' + str(grids[i])
-	segments, o_seg = getSegmentsInSquare(client, grids[i])
-	leaderboard, attempts = getLeaderBoardAttempts(o_seg)
-	seg_streams = getSegmentStreams(client, segments)
-	activities = getLeaderBoardActivities(attempts)
-	#act_streams = getActivityStreams(client, attempts) # doesn't work can't authorize, must be activity owner
+	try:
+		print 'retrieving in: ' + str(grids[i])
+		segments, o_seg = getSegmentsInSquare(client, grids[i])
+		leaderboard, attempts = getLeaderBoardAttempts(o_seg)
+		seg_streams = getSegmentStreams(client, segments)
+		activities = getLeaderBoardActivities(attempts)
+		#act_streams = getActivityStreams(client, attempts) # doesn't work can't authorize, must be activity owner
 
-	saveArrayToCSV(segments, file_segment)
-	saveArrayToCSV(leaderboard, file_leaderboard)
-	saveArrayToCSV(seg_streams, file_streams)
-	saveArrayToCSV(activities, file_activity)
-	#saveArrayToCSV(act_streams, file_act_stream)
+		saveArrayToCSV(segments, file_segment)
+		saveArrayToCSV(leaderboard, file_leaderboard)
+		saveArrayToCSV(seg_streams, file_streams)
+		saveArrayToCSV(activities, file_activity)
+		#saveArrayToCSV(act_streams, file_act_stream)
+	except:
+		print 'error in retrieving, skip 1 grid'
