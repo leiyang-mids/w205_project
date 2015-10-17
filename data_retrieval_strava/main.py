@@ -10,7 +10,7 @@ from getLeaderBoardAttempts import *
 from getSegmentsInSquare import *
 from getSegmentStreams import *
 #from getActivityStreams import *
-from saveCSV import *
+from saveArrayToCSV import *
 # setup
 global client
 execfile("setup.py")
