@@ -29,10 +29,12 @@ if (not os.path.isfile(file_activity)):
 # retrieve info
 # 1. specify geo range for a city/place
 #lat1, lon1, lat2, lon2 = 30.091243, -97.988489, 30.617396, -97.433679  # Austin, TX
-lat1, lon1, lat2, lon2 = 38.790184, -107.567708, 40.719907, -104.376179  # Denver, CO
+#lat1, lon1, lat2, lon2 = 38.790184, -107.567708, 40.719907, -104.376179  # Denver, CO
+#lat1, lon1, lat2, lon2 = 40.572189, -74.877846, 41.894049, -71.993935  # NYC metro, NY
+lat1, lon1, lat2, lon2 = 36.870949, -122.808137, 39.316351, -118.886018  # Bay Area, CA
 
 # 2. divide the range into a grid for scan
-n = 20
+n = 40
 del_lat, del_lon = (lat2-lat1)/n, (lon2-lon1)/n
 grids = []
 for i in range(n):
@@ -55,4 +57,4 @@ for i in range(n*n):
 		saveArrayToCSV(activities, file_activity)
 		#saveArrayToCSV(act_streams, file_act_stream)
 	except:
-		print 'error in retrieving, skip 1 grid'
+		print 'error in retrieving (empty grid), skip 1 grid'
