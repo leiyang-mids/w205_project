@@ -12,10 +12,10 @@ wait
 unzip Sample_1_20151027
 
 echo "# getting rid of header"
-tail -n +2 "activities.csv" > "activities.csv"
-tail -n +2 "leaderboard.csv" > "leaderboard.csv"
-tail -n +2 "segments.csv" > "segments.csv"
-tail -n +2 "wide_segment_streams.csv" > "wide_segment_streams.csv"
+tail -n +2 "activities.csv" > "activities1.csv"
+tail -n +2 "leaderboard.csv" > "leaderboard1.csv"
+tail -n +2 "segments.csv" > "segments1.csv"
+tail -n +2 "wide_segment_streams.csv" > "wide_segment_streams1.csv"
 
 echo "# creating /user/w205/project folder in HDFS ..."
 hdfs dfs -rm -r /user/w205/project
@@ -26,10 +26,10 @@ hdfs dfs -mkdir /user/w205/project/segments_csv
 hdfs dfs -mkdir /user/w205/project/wide_segment_streams_csv
 
 echo "# loading the raw data files into HDFS under /user/w205/project ..."
-hdfs dfs -put activities.csv /user/w205/project/activities_csv/activities.csv
-hdfs dfs -put leaderboard.csv /user/w205/project/leaderboard_csv/leaderboard.csv
-hdfs dfs -put segments.csv /user/w205/project/segments_csv/segments.csv
-hdfs dfs -put wide_segment_streams.csv /user/w205/project/wide_segment_streams_csv/wide_segment_streams.csv
+hdfs dfs -put activities1.csv /user/w205/project/activities_csv/activities.csv
+hdfs dfs -put leaderboard1.csv /user/w205/project/leaderboard_csv/leaderboard.csv
+hdfs dfs -put segments1.csv /user/w205/project/segments_csv/segments.csv
+hdfs dfs -put wide_segment_streams1.csv /user/w205/project/wide_segment_streams_csv/wide_segment_streams.csv
 
 echo "# data loading successfully completed!"
 
