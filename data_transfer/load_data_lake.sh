@@ -9,7 +9,7 @@ wget https://s3-us-west-2.amazonaws.com/w205.data/Sample_1_20151027.zip
 
 wait
 
-unzip Nqc*
+unzip Sample_1_20151027
 
 echo "# getting rid of header"
 tail -n +2 "activities.csv" > "activities.csv"
