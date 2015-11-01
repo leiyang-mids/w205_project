@@ -44,7 +44,7 @@ for i in range(n):
 		grids.append([lat1+i*del_lat, lon1+j*del_lon, lat1+(i+1)*del_lat, lon1+(j+1)*del_lon])
 
 # 3. retrieve and save info in each grid
-for i in range(20): #n*n):
+for i in range(n*n):
 	try:
 		print 'retrieving %s/%s: %s' %(i+1, n*n, str(grids[i]))
 		segments, o_seg = getSegmentsInSquare(client, grids[i])
