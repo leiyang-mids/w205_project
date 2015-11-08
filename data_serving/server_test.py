@@ -8,7 +8,7 @@ PORT = 8330
 
 if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
     interface = sys.argv[2] if len(sys.argv) > 2 else ''
-    s.bind(('172.31.4.15', PORT))
+    s.bind(('52.91.37.27', PORT))
     print 'Listening at', s.getsockname()
     while True:
         data, address = s.recvfrom(MAX)
