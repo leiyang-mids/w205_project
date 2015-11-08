@@ -8,7 +8,7 @@ PORT = 8330
 
 if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
     interface = sys.argv[2] if len(sys.argv) > 2 else ''
-    s.bind(('52.91.37.27', PORT))
+    s.bind((interface, PORT))
     print 'Listening at', s.getsockname()
     while True:
         data, address = s.recvfrom(MAX)
@@ -21,7 +21,7 @@ if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
 elif len(sys.argv) == 3 and sys.argv[1] == 'client':
     hostname = sys.argv[2]
     #s.connect((hostname, PORT))
-    print 'Client socket name is', s.getsockname()
+    #print 'Client socket name is', s.getsockname()
     delay = 0.1
     while True:
         s.sendto('This is another message', (hostname, PORT))
