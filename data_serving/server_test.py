@@ -20,11 +20,11 @@ if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
 
 elif len(sys.argv) == 3 and sys.argv[1] == 'client':
     hostname = sys.argv[2]
-    #s.connect((hostname, PORT))
-    #print 'Client socket name is', s.getsockname()
+    s.connect((hostname, PORT))
+    print 'Client socket name is', s.getsockname()
     delay = 0.1
     while True:
-        s.sendto('This is another message', (hostname, PORT))
+        s.send('This is another message')
         print 'Waiting up to', delay, 'seconds for a reply'
         s.settimeout(delay)
         try:
