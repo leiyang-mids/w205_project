@@ -6,7 +6,7 @@ import pyhs2
 
 # get input data
 data = cgi.FieldStorage()
-temp = data['p1'].value
+temp = data['hql'].value
 
 response = []
 # do whatever you want here

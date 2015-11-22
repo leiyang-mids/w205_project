@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Path Finder</title>
+  <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-2.0.3.js"></script>
+  <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+
+  <script>
+  $(function() {
+    $( "#start" ).datepicker();
+  });
+  $(function() {
+    $( "#end" ).datepicker();
+  });
+  $(function() {
+    $( "#state" ).selectmenu();
+  });
+  $(function() {
+    $( "#category" ).selectmenu();
+  });
+  $(function() {
+    $( "#city").selectmenu();
+  });
+  </script>
+
+  <style>
+   fieldset {
+     border: 0;
+   }
+   label {
+     display: block;
+     margin: 30px 0 0 0;
+   }
+   select {
+     width: 150px;
+   }
+   .overflow {
+     height: 200px;
+   }
+
+   .axis path,
+   .axis line {
+     fill: none;
+     stroke: #000;
+     shape-rendering: crispEdges;
+   }
+
+   .x.axis path {
+     display: none;
+   }
+
+   .line {
+     fill: none;
+     stroke: steelblue;
+     stroke-width: 1.5px;
+   }
+ </style>
+</head>
+
+<body>
+
+<p>Start Date: <input type="text" id="start" onchange=newStartDate()></p>
+<p>End Date: <input type="text" id="end" onchange=newEndDate()></p>
+
+<label for="state">Select a state</label>
+<select name="state" id="state"></select>
+
+<label for="category">Select a category</label>
+<select name="category" id="category"></select>
+
+<label for="city">Select a city</label>
+<select name="city" id="city"></select>
+
+<script>
+// firstforemost
+var host = '52.23.157.248';
+
+//----------------------- viz components -------------------------
+
+//----------------------- viz components -------------------------
+
+//----------------------- initialization -------------------------
+// populate state, city, category dropdowns
+
+queryHive('select distinct state from e_segments');
+
+//----------------------- initialization -------------------------
+
+//----------------------- event handlers -------------------------
+function newStartDate() {
+  if ($('#end').val() == "" || $('#state').val() == "") {
+    // if end is null, do nothing
+    return;
+  }
+  //alert($('#start').val())
+  refreshData();
+}
+
+function newEndDate() {
+  if ($('#start').val() == "" || $('#state').val() == "") {
+    // if start is null, do nothing
+    return;
+  }
+  //alert($('#end').val())
+  refreshData();
+}
+
+$('#state').on('selectmenuchange', function() {
+  if ($('#start').val() == "" || $('#end').val() == "") {
+    // if start or end is null, do nothing
+    return;
+  }
+  //alert($('#state').val());
+  refreshData();
+});
+
+$('#category').on('selectmenuchange', function() {
+  if (plot_data == null || plot_data.length == 0) {
+    console.warn('No data to plot!')
+    return;
+  }
+  //alert($('#state').val());
+  refreshChart();
+});
+
+$('#city').on('selectmenuchange', function() {
+  if (plot_data == null || plot_data.length == 0) {
+    console.warn('No data to plot!')
+    return;
+  }
+  //alert($('#state').val());
+  refreshChart();
+});
+//----------------------- event handlers -------------------------
+
+//----------------------- biz logic -------------------------
+var plot_data, query_data;
+// send HQL to hive - string HQL input
+function queryHive(HQL) {
+  console.log('Start query: ' + HQL)
+  $.ajax({
+    type: "GET",
+    url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
+    data: { hql: HQL }
+  }).done(function(output) {
+     // get return
+     query_data = output;
+     console.log('HQL completed with ' + query_data.length + ' rows.');
+
+  });
+}
+
+function refreshData() {
+
+}
+
+function refreshChart() {
+
+}
+//----------------------- biz logic -------------------------
+</script>
+
+</body>
+</html>

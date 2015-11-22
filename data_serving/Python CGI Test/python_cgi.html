@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 
 <head>
-    <title>JQ</title>
+    <title>Path Finder</title>
 
 </head>
 
@@ -12,18 +12,18 @@
   <button type="button" class="home">Test</button>
 </body>
 
-<script src="http://code.jquery.com/jquery-2.0.3.js"></script>
+<script src="https://code.jquery.com/jquery-2.0.3.js"></script>
 <script>
 
 //alert('test')
 var testvar;
-
+var host = '52.23.157.248';
 $('button.home').click(function(){
 
 $.ajax({
   type: "GET",
-  url: "http://54.85.44.161:8330/cgi-bin/hallo4.py",
-  data: { p1: 'hallo3', p2: 'world' }
+  url: "http://" + host + ":8330/cgi-bin/hallo4.py",
+  data: { hql: 'select count(*) from crimes', p2: 'world' }
 }).done(function(output) {
    // do something
    testvar = output;
