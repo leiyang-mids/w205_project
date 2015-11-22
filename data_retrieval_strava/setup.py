@@ -26,5 +26,6 @@ file_act_stream = 'activity_streams.csv'
 
 # initialize API client
 #global client
-client = Client(access_token='763cf38950a862fa1dd831d505bd6768f8d0f612')
+client = Client(access_token='9af471894fee3401d0fdfa605494a2b6106d1604')
+#client = Client(access_token='763cf38950a862fa1dd831d505bd6768f8d0f612')
 #athlete = client.get_athlete()

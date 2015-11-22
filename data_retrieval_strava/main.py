@@ -29,14 +29,15 @@ if (not os.path.isfile(file_activity)):
 
 # retrieve info
 # 1. specify geo range for a city/place
-#lat1, lon1, lat2, lon2 = 30.091243, -97.988489, 30.617396, -97.433679  # Austin, TX
-#lat1, lon1, lat2, lon2 = 38.790184, -107.567708, 40.719907, -104.376179  # Denver, CO
-#lat1, lon1, lat2, lon2 = 40.572189, -74.877846, 41.894049, -71.993935  # NYC metro, NY
-#lat1, lon1, lat2, lon2 = 36.870949, -122.808137, 39.316351, -118.886018  # Bay Area, CA
-lat1, lon1, lat2, lon2 = 45.125420, -124.497473, 50.568858, -118.825430  # around Seattle, WA
+#lat1, lon1, lat2, lon2 = 39.208890, -106.536975, 40.580307, -104.289702  # Denver, CO - Done
+lat1, lon1, lat2, lon2 = 40.572189, -74.877846, 41.894049, -71.993935  # NYC metro, NY
+#lat1, lon1, lat2, lon2 = 37.115116, -122.558166, 38.368947, -121.500320  # Bay Area, CA - Done
+#lat1, lon1, lat2, lon2 = 45.125420, -124.497473, 50.568858, -118.825430  # around Seattle, WA - Done
+#lat1, lon1, lat2, lon2 = 29.114546, -100.328738, 36.862748, -90.111453  # TX and around - Done
+
 
 # 2. divide the range into a grid for scan
-n = 40
+n = 50
 del_lat, del_lon = (lat2-lat1)/n, (lon2-lon1)/n
 grids = []
 for i in range(n):
@@ -44,7 +45,7 @@ for i in range(n):
 		grids.append([lat1+i*del_lat, lon1+j*del_lon, lat1+(i+1)*del_lat, lon1+(j+1)*del_lon])
 
 # 3. retrieve and save info in each grid
-for i in range(n*n):
+for i in range(2054, n*n):
 	try:
 		print 'retrieving %s/%s: %s' %(i+1, n*n, str(grids[i]))
 		segments, o_seg = getSegmentsInSquare(client, grids[i])
