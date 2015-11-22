@@ -76,7 +76,7 @@
 <select name="city" id="city"></select>
 
 <script>
-// firstforemost
+// first and foremost
 var host = '52.23.157.248';
 
 //----------------------- viz components -------------------------
@@ -85,8 +85,8 @@ var host = '52.23.157.248';
 
 //----------------------- initialization -------------------------
 // populate state, city, category dropdowns
+initialize();
 
-queryHive('select distinct state from e_segments');
 
 //----------------------- initialization -------------------------
 
@@ -140,18 +140,80 @@ $('#city').on('selectmenuchange', function() {
 //----------------------- biz logic -------------------------
 var plot_data, query_data;
 // send HQL to hive - string HQL input
-function queryHive(HQL) {
-  console.log('Start query: ' + HQL)
+function initialize() {
+  var HQL = 'select distinct state from e_segments';
+  console.log('Start query states: ' + HQL)
   $.ajax({
     type: "GET",
     url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
     data: { hql: HQL }
   }).done(function(output) {
      // get return
-     query_data = output;
-     console.log('HQL completed with ' + query_data.length + ' rows.');
-
+     states = output.sort(function(i, d) { return d.row.trim()});
+     console.log('State HQL completed with ' + output.length + ' rows.');
+     getCategories();
   });
+}
+
+function getCategories() {
+  var HQL = 'select distinct climb_category from e_segments';
+  console.log('Start query categories: ' + HQL)
+  $.ajax({
+    type: "GET",
+    url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
+    data: { hql: HQL }
+  }).done(function(output) {
+     // get return
+     categories = output;
+     console.log('Category HQL completed with ' + output.length + ' rows.');
+     getCities();
+  });
+}
+
+function getCities() {
+  var HQL = "select distinct concat(city,', ',state) from e_segments";
+  console.log('Start query cities: ' + HQL)
+  $.ajax({
+    type: "GET",
+    url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
+    data: { hql: HQL }
+  }).done(function(output) {
+     // get return
+     cities = output;
+     console.log('City HQL completed with ' + output.length + ' rows.');
+     populateDropdowns()
+  });
+}
+
+function populateDropdowns() {
+  // clear first
+  $('#state').empty();
+  $('#city').empty();
+  $('#category').empty();
+  // populate
+  $.each(states, function(i, v) {
+    $('#state')
+      .append($("<option></option>")
+      .attr('value', v.row.trim())
+      .text(v.row.trim()));
+  });
+  $.each(cities, function(i, v) {
+    $('#city')
+      .append($("<option></option>")
+      .attr('value', v.row.trim())
+      .text(v.row.trim()));
+  });
+  $.each(categories, function(i, v) {
+    $('#category')
+      .append($("<option></option>")
+      .attr('value', v.row.trim())
+      .text(v.row.trim()));
+  });
+  // refresh
+  $('#state').selectmenu('refresh');
+  $('#city').selectmenu('refresh');
+  $('#category').selectmenu('refresh');
+  // TODO: you can see there are all kinds crap in the data: cleaning is a huge deal here
 }
 
 function refreshData() {
