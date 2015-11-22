@@ -66,14 +66,14 @@
 <p>Start Date: <input type="text" id="start" onchange=newStartDate()></p>
 <p>End Date: <input type="text" id="end" onchange=newEndDate()></p>
 
+<label for="city">Select a city</label>
+<select name="city" id="city"></select>
+
 <label for="state">Select a state</label>
 <select name="state" id="state"></select>
 
 <label for="category">Select a category</label>
 <select name="category" id="category"></select>
-
-<label for="city">Select a city</label>
-<select name="city" id="city"></select>
 
 <script>
 // first and foremost
@@ -141,7 +141,7 @@ $('#city').on('selectmenuchange', function() {
 var plot_data, query_data;
 // send HQL to hive - string HQL input
 function initialize() {
-  var HQL = 'select distinct state from e_segments';
+  var HQL = 'select distinct state from e_segments order by state';
   console.log('Start query states: ' + HQL)
   $.ajax({
     type: "GET",
@@ -149,14 +149,14 @@ function initialize() {
     data: { hql: HQL }
   }).done(function(output) {
      // get return
-     states = output.sort(function(i, d) { return d.row.trim()});
+     states = output;
      console.log('State HQL completed with ' + output.length + ' rows.');
      getCategories();
   });
 }
 
 function getCategories() {
-  var HQL = 'select distinct climb_category from e_segments';
+  var HQL = 'select distinct climb_category from e_segments order by climb_category';
   console.log('Start query categories: ' + HQL)
   $.ajax({
     type: "GET",
@@ -171,7 +171,7 @@ function getCategories() {
 }
 
 function getCities() {
-  var HQL = "select distinct concat(city,', ',state) from e_segments";
+  var HQL = "select distinct concat(city,', ',state) as c from e_segments order by c";
   console.log('Start query cities: ' + HQL)
   $.ajax({
     type: "GET",
