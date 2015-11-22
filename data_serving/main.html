@@ -63,8 +63,10 @@
 
 <body>
 
+<!-- not yet
 <p>Start Date: <input type="text" id="start" onchange=newStartDate()></p>
 <p>End Date: <input type="text" id="end" onchange=newEndDate()></p>
+-->
 
 <label for="city">Select a city</label>
 <select name="city" id="city"></select>
@@ -74,6 +76,8 @@
 
 <label for="category">Select a category</label>
 <select name="category" id="category"></select>
+
+<button type="button" class="home">Refresh Chart</button>
 
 <script>
 // first and foremost
@@ -85,6 +89,7 @@ var host = '52.23.157.248';
 
 //----------------------- initialization -------------------------
 // populate state, city, category dropdowns
+// TODO: you can see there are all kinds crap in the data: cleaning is a huge deal
 initialize();
 
 
@@ -134,6 +139,10 @@ $('#city').on('selectmenuchange', function() {
   }
   //alert($('#state').val());
   refreshChart();
+});
+
+$('button.home').click(function(){
+
 });
 //----------------------- event handlers -------------------------
 
@@ -213,7 +222,6 @@ function populateDropdowns() {
   $('#state').selectmenu('refresh');
   $('#city').selectmenu('refresh');
   $('#category').selectmenu('refresh');
-  // TODO: you can see there are all kinds crap in the data: cleaning is a huge deal here
 }
 
 function refreshData() {

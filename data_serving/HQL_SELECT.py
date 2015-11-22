@@ -4,7 +4,7 @@ import json
 import cgi
 import pyhs2
 
-# get input data - assuming parameter from jQuery looks like this:
+# input data - assuming parameter from jQuery looks like this:
 # data: { hql: 'select count(*) from crimes' }
 data = cgi.FieldStorage()
 hql = data['hql'].value
