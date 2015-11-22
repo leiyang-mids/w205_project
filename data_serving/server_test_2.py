@@ -34,7 +34,7 @@ if sys.argv[1:] == ['server']:
 elif sys.argv[1:] == ['client']:
     s.connect((HOST, PORT))
     print 'Client has been assigned socket name', s.getsockname()
-    s.sendall('Hi there, server')
+    s.sendall('Hi there, remote server')
     reply = recvall(s, 16)
     print 'The server said', repr(reply)
     s.close()
