@@ -195,6 +195,7 @@ function getCities() {
 }
 
 function populateDropdowns() {
+  console.log('start refreshing dropdowns.')
   // clear first
   $('#state').empty();
   $('#city').empty();
@@ -222,6 +223,7 @@ function populateDropdowns() {
   $('#state').selectmenu('refresh');
   $('#city').selectmenu('refresh');
   $('#category').selectmenu('refresh');
+  console.log('dropdown refreshing components.')
 }
 
 function refreshData() {
