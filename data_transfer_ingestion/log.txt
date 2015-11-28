@@ -36,3 +36,33 @@ rm: `/user/w205/project': No such file or directory
 # data loading successfully completed!
 # remove local folder, done!
 [w205@ip-172-31-12-236 data_transfer_ingestion]$
+[w205@ip-172-31-12-236 data_transfer_ingestion]$ hive -f hive_base_ddl.sql
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/lib/zookeeper/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/w205/spark15/lib/spark-assembly-1.5.0-hadoop2.6.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+SLF4J: Class path contains multiple SLF4J bindings.
+SLF4J: Found binding in [jar:file:/usr/lib/zookeeper/lib/slf4j-log4j12-1.7.5.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: Found binding in [jar:file:/home/w205/spark15/lib/spark-assembly-1.5.0-hadoop2.6.0.jar!/org/slf4j/impl/StaticLoggerBinder.class]
+SLF4J: See http://www.slf4j.org/codes.html#multiple_bindings for an explanation.
+SLF4J: Actual binding is of type [org.slf4j.impl.Log4jLoggerFactory]
+
+Logging initialized using configuration in file:/data/hadoop/hive/conf/hive-log4j.properties
+OK
+Time taken: 1.094 seconds
+OK
+Time taken: 0.697 seconds
+OK
+Time taken: 0.12 seconds
+OK
+Time taken: 0.059 seconds
+OK
+Time taken: 0.108 seconds
+OK
+Time taken: 0.05 seconds
+OK
+Time taken: 0.086 seconds
+OK
+Time taken: 0.043 seconds
+[w205@ip-172-31-12-236 data_transfer_ingestion]$

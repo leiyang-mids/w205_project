@@ -1,5 +1,5 @@
 -- to display column name in the query
-set hive.cli.print.header=true;
+set hive.cli.print.header = true;
 
 -- external table for activities.csv
 drop table e_activities;
