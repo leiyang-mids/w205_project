@@ -15,11 +15,11 @@ for line in source:
     distance = np.array(cells[1][1:-1].split('|'))
     altitude = np.array(cells[2][1:-1].split('|'))
     if (len(distance)!=len(altitude)):
-        print 'dimension mismatch between distance and altitude for ' + cells[0]
+        print 'dimension mismatch between distance and altitude, skipping ' + cells[0]
         continue
     latlng = np.transpose([ll.split('|') for ll in cells[3][2:-3].split(']|[')])
     if (len(np.shape(latlng))<2 or len(distance)!=np.shape(latlng)[1]):
-        print 'dimension mismatch between distance and coordinates for ' + cells[0]
+        print 'dimension mismatch between distance and coordinates, skipping ' + cells[0]
         continue
     seg_id = np.repeat(cells[0], len(distance))
     segment = np.transpose(np.vstack((seg_id, distance, altitude, latlng)))
