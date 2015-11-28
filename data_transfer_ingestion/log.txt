@@ -1,0 +1,38 @@
+[w205@ip-172-31-12-236 data_transfer_ingestion]$ ./load_data_lake.sh
+# creating local folder to download and store the data
+# downloading and unzip the data
+--2015-11-28 21:40:27--  https://s3-us-west-2.amazonaws.com/w205.data/strava_data.zip
+Resolving s3-us-west-2.amazonaws.com... 54.231.184.172
+Connecting to s3-us-west-2.amazonaws.com|54.231.184.172|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 156680860 (149M) [application/zip]
+Saving to: `strava_data.zip'
+
+100%[=================================================================================>] 156,680,860 37.3M/s   in 5.5s
+
+2015-11-28 21:40:33 (27.3 MB/s) - `strava_data.zip' saved [156680860/156680860]
+
+Archive:  strava_data.zip
+  inflating: activities.csv
+  inflating: leaderboard.csv
+  inflating: segment_streams.csv
+  inflating: segments.csv
+   creating: __MACOSX/
+  inflating: __MACOSX/._segments.csv
+converting stream data to wide format ...
+dimension mismatch between distance and coordinates, skipping 288179
+dimension mismatch between distance and coordinates, skipping 5864062
+dimension mismatch between distance and coordinates, skipping 300163
+dimension mismatch between distance and coordinates, skipping 343677
+dimension mismatch between distance and coordinates, skipping 298309
+dimension mismatch between distance and coordinates, skipping 311123
+dimension mismatch between distance and coordinates, skipping 335603
+dimension mismatch between distance and coordinates, skipping 316691
+conversion completed!
+# getting rid of header
+# creating /user/w205/project folder in HDFS ...
+rm: `/user/w205/project': No such file or directory
+# loading the raw data files into HDFS under /user/w205/project ...
+# data loading successfully completed!
+# remove local folder, done!
+[w205@ip-172-31-12-236 data_transfer_ingestion]$

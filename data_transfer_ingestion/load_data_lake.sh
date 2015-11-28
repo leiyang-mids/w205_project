@@ -1,6 +1,6 @@
 #! /bin/bash
 
-echo "# creating local folder to download and store the data"
+echo "# creating local folder to download and store the data ..."
 mkdir /data/w205project
 # copy the convert script to project
 cp convert_stream.py /data/w205project
@@ -8,7 +8,7 @@ cd /data/w205project
 
 
 
-echo "# downloading and unzip the data"
+echo "# downloading and unzip the data ..."
 wget https://s3-us-west-2.amazonaws.com/w205.data/strava_data.zip
 
 wait
@@ -16,7 +16,7 @@ wait
 unzip strava_data.zip
 python convert_stream.py
 
-echo "# getting rid of header"
+echo "# getting rid of header ..."
 tail -n +2 "activities.csv" > "activities1.csv"
 tail -n +2 "leaderboard.csv" > "leaderboard1.csv"
 tail -n +2 "segments.csv" > "segments1.csv"
