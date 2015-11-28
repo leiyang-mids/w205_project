@@ -2,14 +2,19 @@
 
 echo "# creating local folder to download and store the data"
 mkdir /data/w205project
+# copy the convert script to project
+cp convert_stream.py /data/w205project
 cd /data/w205project
 
+
+
 echo "# downloading and unzip the data"
-wget https://s3-us-west-2.amazonaws.com/w205.data/Sample_1_20151027.zip
+wget https://s3-us-west-2.amazonaws.com/w205.data/strava_data.zip
 
 wait
 
-unzip Sample_1_20151027
+unzip strava_data.zip
+python convert_stream.py
 
 echo "# getting rid of header"
 tail -n +2 "activities.csv" > "activities1.csv"

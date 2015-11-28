@@ -2,6 +2,7 @@ import csv
 import numpy as np
 import os.path
 
+print 'converting stream data to wide format ...'
 source = open('segment_streams.csv', 'r')
 header = source.readline()
 destFileName = 'wide_segment_streams.csv'
@@ -26,4 +27,4 @@ for line in source:
 
 source.close()
 destination.close()
-print 'done'
+print 'conversion completed!'
