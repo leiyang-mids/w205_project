@@ -116,29 +116,17 @@ function newEndDate() {
   refreshData();
 }
 
-$('#state').on('selectmenuchange', function() {
-  if ($('#start').val() == "" || $('#end').val() == "") {
-    // if start or end is null, do nothing
-    return;
-  }
+$('#state').on('selectmenuchange', function() {  
   //alert($('#state').val());
   refreshData();
 });
 
 $('#category').on('selectmenuchange', function() {
-  if (plot_data == null || plot_data.length == 0) {
-    console.warn('No data to plot!')
-    return;
-  }
   //alert($('#state').val());
   refreshData();
 });
 
 $('#city').on('selectmenuchange', function() {
-  if (plot_data == null || plot_data.length == 0) {
-    console.warn('No data to plot!')
-    return;
-  }
   //alert($('#state').val());
   refreshData();
 });
