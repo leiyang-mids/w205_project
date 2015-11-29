@@ -136,7 +136,7 @@ function converter(csvData, field) {
 	  contract_data.values = contract_rows.map(function(row) {
 	    return {
 	      city: contract_data,
-		    date: row.distance, //dayFormat(row.trade_date),
+		    date: row.distance/1609.34, // in miles
 		    value: row.altitude - baseline // price type
 	    };
 	  });
