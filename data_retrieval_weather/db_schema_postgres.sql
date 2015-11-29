@@ -1,6 +1,6 @@
 CREATE TABLE weather (
     city            varchar(80),
-    date            date,
+    date            varchar(10),
     temp_lo         int,           -- low temperature
     temp_hi         int,           -- high temperature
     temp            int,           -- Current Temperature

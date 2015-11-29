@@ -33,10 +33,10 @@ for i in cities:
            weather['temp_lo'] = temp['temp_min']
            weather['temp_hi'] = temp['temp_max']
            weather['temp']=temp['temp']
-           weather['pressure']= w.get_pressure()
-           weather['wind']= w.get_wind()
-           weather['snow']=w.get_snow()
-           weather['rain']=w.get_rain()
+           weather['pressure']= str( w.get_pressure())
+           weather['wind']= str(w.get_wind())
+           weather['snow']= str(w.get_snow())
+           weather['rain']=str(w.get_rain())
            weather['sunrise_time']=w.get_sunrise_time()
            weather['sunset_time']=w.get_sunset_time()
            weather['status']=w.get_detailed_status()
@@ -61,7 +61,7 @@ for i in cities:
            
     else:
           print 'Not a ascii city:',cities[i]['name']
-          break
+#          break
 
 
  
