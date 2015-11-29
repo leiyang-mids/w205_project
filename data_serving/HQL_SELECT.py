@@ -22,7 +22,7 @@ with pyhs2.connect(host='localhost',
         cur.execute(hql)
         # fetch table results and assemble response
         for r in cur.fetch():
-            response.append({'row': '|'.join(r)})
+            response.append({'row': '|'.join(str(a) for a in r)})
 
 # dump output json - don't change any line
 print 'Content-type: application/json'

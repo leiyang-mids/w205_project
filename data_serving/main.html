@@ -129,7 +129,7 @@ $('#category').on('selectmenuchange', function() {
     return;
   }
   //alert($('#state').val());
-  refreshChart();
+  refreshData();
 });
 
 $('#city').on('selectmenuchange', function() {
@@ -138,7 +138,7 @@ $('#city').on('selectmenuchange', function() {
     return;
   }
   //alert($('#state').val());
-  refreshChart();
+  refreshData();
 });
 
 $('button.home').click(function(){
@@ -150,7 +150,7 @@ $('button.home').click(function(){
 var plot_data, query_data;
 // send HQL to hive - string HQL input
 function initialize() {
-  var HQL = 'select distinct state from e_segments order by state';
+  var HQL = 'select distinct state from m_segment order by state';
   console.log('Start query states: ' + HQL)
   $.ajax({
     type: "GET",
@@ -165,7 +165,7 @@ function initialize() {
 }
 
 function getCategories() {
-  var HQL = 'select distinct climb_category from e_segments order by climb_category';
+  var HQL = 'select distinct category from m_segment where category in (0,1,2,3,4,5) order by category';
   console.log('Start query categories: ' + HQL)
   $.ajax({
     type: "GET",
@@ -180,7 +180,7 @@ function getCategories() {
 }
 
 function getCities() {
-  var HQL = "select distinct concat(city,', ',state) as c from e_segments order by c";
+  var HQL = "select distinct concat(city, ', ', state) as c from m_segment order by c";
   console.log('Start query cities: ' + HQL)
   $.ajax({
     type: "GET",
@@ -227,7 +227,20 @@ function populateDropdowns() {
 }
 
 function refreshData() {
-
+  $('#state').val()
+  var HQL = "select seg.name, str.distance, str.altitude \
+    from m_stream str join m_segment seg on str.seg_id = seg.id \
+    where seg.state = '" + $('#state').val() + "' and seg.category = " + $('#category').val();
+  console.log('Start query stream altitude: ' + HQL)
+  $.ajax({
+    type: "GET",
+    url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
+    data: { hql: HQL }
+  }).done(function(output) {
+     // get return
+     stream = output;
+     console.log('City HQL completed with ' + output.length + ' rows.');
+  });
 }
 
 function refreshChart() {
