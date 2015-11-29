@@ -97,6 +97,10 @@ function refreshData() {
 }
 
 function refreshChart() {
+  if (stream.length == 0) {
+    console.log('No data for the selected filter.');
+    return;
+  }
   console.log('Start sorting data ...');
   var csvData = stream.map(function(r) {
     columns = r.row.split('|');

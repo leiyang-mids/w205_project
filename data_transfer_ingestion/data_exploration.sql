@@ -13,3 +13,5 @@ select
 from
   m_stream str join m_segment seg on str.seg_id = seg.id
 where seg.state = 'TX' and seg.category = 1;
+
+select seg.name, str.distance, str.altitude     from m_stream str join m_segment seg on str.seg_id = seg.id     where seg.state = 'MO' and seg.category = 1 order by name, distance;

@@ -9,8 +9,8 @@ function plot_voronoi(csv_data, price) {
   	width = 960 - margin.left - margin.right,
   	height = 500 - margin.top - margin.bottom;
 
-  //var x = d3.scale.linear().range([0, width]);
-  var x = d3.time.scale().range([0, width]);
+  var x = d3.scale.linear().range([0, width]);
+  //var x = d3.time.scale().range([0, width]);
 
   var y = d3.scale.linear().range([height, 0]);
 
@@ -93,7 +93,9 @@ function plot_voronoi(csv_data, price) {
           .key(function(d) { return x(d.date) + "," + y(d.value); })
           .rollup(function(v) { return v[0]; })
           .entries(d3.merge(cities.map(function(d) { return d.values; })))
-          .map(function(d) { return d.values; })))
+          .map(function(d) { return d.values; }))
+          //.filter(function(d) { return d != null; })
+        )
     .enter().append("path")
       .attr("d", function(d) { return "M" + d.join("L") + "Z"; })
       .datum(function(d) { return d.point; })
