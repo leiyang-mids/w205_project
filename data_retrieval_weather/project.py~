@@ -1,0 +1,61 @@
+import json
+import pyowm
+import geonamescache
+import re
+from curses import ascii
+import string
+
+import time
+import psycopg2
+
+def isAscii(s):
+    for c in s:
+        if c not in string.ascii_letters:
+            return False
+    return True
+
+gc = geonamescache.GeonamesCache()
+cities = gc.get_cities()
+
+weather = {}
+finaldict = {}
+owm = pyowm.OWM('b4d6a45357444bb50ea559bb93971d50')
+
+for i in cities:
+    print cities[i]['name']
+    if isAscii(cities[i]['name']) == True:
+           weather = {} 
+           observation = owm.weather_at_place(cities[i]['name'])
+           w = observation.get_weather()
+           weather['city'] = cities[i]['name']
+           weather['date'] = time.strftime("%d/%m/%Y")
+           temp = w.get_temperature('celsius')
+           weather['temp_lo'] = temp['temp_min']
+           weather['temp_hi'] = temp['temp_max']
+           weather['temp']=temp['temp']
+           weather['pressure']= w.get_pressure()
+           weather['wind']= w.get_wind()
+           weather['snow']=w.get_snow()
+           weather['rain']=w.get_rain()
+           weather['sunrise_time']=w.get_sunrise_time()
+           weather['sunset_time']=w.get_sunset_time()
+           weather['status']=w.get_detailed_status()
+           weather['weather_cd']=w.get_weather_code()
+           weather['visibility_distance']=w.get_visibility_distance()
+           weather['dewpoint']=w.get_dewpoint()
+           weather['humidity']=w.get_humidity()
+           finaldict.update(weather)
+           
+    else:
+          print 'Not a ascii city:',cities[i]['name']
+          break
+conn = psycopg2.connect(user="postgres", password="pass", host="localhost", port="5432")
+cur = conn.cursor()
+cur.execute("""INSERT INTO weather(city,date,temp_lo,temp_hi,temp,pressure,wind,snow,rain,
+                   sunrise_time,sunset_time,status,weather_cd,visibility_distance,dewpoint,humidity)
+                   VALUES (%(city)s, %(date)s,%(temp_lo)s,%(temp_hi)s,%(temp)s,%(pressure)s,%(wind)s,%(snow)s,%(rain)s,
+                   %(sunrise_time)s,%(sunset_time)s,%(status)s,%(weather_cd)s,%(visibility_distance)s,%(dewpoint)s,%(humidity)s)""", finaldict)
+conn.commit()
+ 
+ 
+   
