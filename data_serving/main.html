@@ -8,6 +8,8 @@
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
+  <script src="voronoi_lines.js"></script>
+  <script src="biz_main.js"></script>
 
   <script>
   $(function() {
@@ -91,7 +93,7 @@ var host = '54.174.84.97'; //<the AWS host ip>;
 // populate state, city, category dropdowns
 // TODO: you can see there are all kinds crap in the data: cleaning is a huge deal
 initialize();
-
+var svg = d3.select('body').append("svg").attr('id', 'voronoi');
 
 //----------------------- initialization -------------------------
 
@@ -145,108 +147,6 @@ $('button.home').click(function(){
 
 });
 //----------------------- event handlers -------------------------
-
-//----------------------- biz logic -------------------------
-var plot_data, query_data;
-// send HQL to hive - string HQL input
-function initialize() {
-  var HQL = 'select distinct state from m_segment order by state';
-  console.log('Start query states: ' + HQL)
-  $.ajax({
-    type: "GET",
-    url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
-    data: { hql: HQL }
-  }).done(function(output) {
-     // get return
-     states = output;
-     console.log('State HQL completed with ' + output.length + ' rows.');
-     getCategories();
-  });
-}
-
-function getCategories() {
-  var HQL = 'select distinct category from m_segment where category in (0,1,2,3,4,5) order by category';
-  console.log('Start query categories: ' + HQL)
-  $.ajax({
-    type: "GET",
-    url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
-    data: { hql: HQL }
-  }).done(function(output) {
-     // get return
-     categories = output;
-     console.log('Category HQL completed with ' + output.length + ' rows.');
-     getCities();
-  });
-}
-
-function getCities() {
-  var HQL = "select distinct concat(city, ', ', state) as c from m_segment order by c";
-  console.log('Start query cities: ' + HQL)
-  $.ajax({
-    type: "GET",
-    url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
-    data: { hql: HQL }
-  }).done(function(output) {
-     // get return
-     cities = output;
-     console.log('City HQL completed with ' + output.length + ' rows.');
-     populateDropdowns()
-  });
-}
-
-function populateDropdowns() {
-  console.log('start refreshing dropdowns.')
-  // clear first
-  $('#state').empty();
-  $('#city').empty();
-  $('#category').empty();
-  // populate
-  $.each(states, function(i, v) {
-    $('#state')
-      .append($("<option></option>")
-      .attr('value', v.row.trim())
-      .text(v.row.trim()));
-  });
-  $.each(cities, function(i, v) {
-    $('#city')
-      .append($("<option></option>")
-      .attr('value', v.row.trim())
-      .text(v.row.trim()));
-  });
-  $.each(categories, function(i, v) {
-    $('#category')
-      .append($("<option></option>")
-      .attr('value', v.row.trim())
-      .text(v.row.trim()));
-  });
-  // refresh
-  $('#state').selectmenu('refresh');
-  $('#city').selectmenu('refresh');
-  $('#category').selectmenu('refresh');
-  console.log('dropdown refreshing components.')
-}
-
-function refreshData() {
-  $('#state').val()
-  var HQL = "select seg.name, str.distance, str.altitude \
-    from m_stream str join m_segment seg on str.seg_id = seg.id \
-    where seg.state = '" + $('#state').val() + "' and seg.category = " + $('#category').val();
-  console.log('Start query stream altitude: ' + HQL)
-  $.ajax({
-    type: "GET",
-    url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
-    data: { hql: HQL }
-  }).done(function(output) {
-     // get return
-     stream = output;
-     console.log('City HQL completed with ' + output.length + ' rows.');
-  });
-}
-
-function refreshChart() {
-
-}
-//----------------------- biz logic -------------------------
 </script>
 
 </body>
