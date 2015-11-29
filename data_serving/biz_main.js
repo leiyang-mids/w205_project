@@ -81,7 +81,8 @@ function populateDropdowns() {
 function refreshData() {
   var HQL = "select seg.name, str.distance, str.altitude \
     from m_stream str join m_segment seg on str.seg_id = seg.id \
-    where seg.state = '" + $('#state').val() + "' and seg.category = " + $('#category').val();
+    where seg.state = '" + $('#state').val() + "' and seg.category = " + $('#category').val()
+    + " order by name, distance";
   console.log('Start query stream altitude: ' + HQL)
   $.ajax({
     type: "GET",

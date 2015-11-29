@@ -9,7 +9,8 @@ function plot_voronoi(csv_data, price) {
   	width = 960 - margin.left - margin.right,
   	height = 500 - margin.top - margin.bottom;
 
-  var x = d3.scale.linear().range([0, width]);
+  //var x = d3.scale.linear().range([0, width]);
+  var x = d3.time.scale().range([0, width]);
 
   var y = d3.scale.linear().range([height, 0]);
 
@@ -85,7 +86,7 @@ function plot_voronoi(csv_data, price) {
   focus.append("text").attr("y", -10);
 
   var voronoiGroup = svg.append("g").attr("class", "voronoi");
-/*
+
   console.log(timestamp() + ': start building voronoi mesh ...');
   voronoiGroup.selectAll("path")
       .data(voronoi(d3.nest()
@@ -99,7 +100,7 @@ function plot_voronoi(csv_data, price) {
       .on("mouseover", mouseover)
       .on("mouseout", mouseout);
   console.log(timestamp() + ': finish building voronoi mesh ...');
-
+/*
   d3.select("#show-voronoi")
       .property("disabled", false)
       .on("change", function() { voronoiGroup.classed("voronoi--show", this.checked); });
@@ -125,8 +126,9 @@ function converter(csvData, field) {
   // get contracts
   var contracts = d3.set(csvData.map(function(row) { return row.segment; })).values();
   // for each contract, get one row of the weird data format
-  return contracts.map(function(contract) {
-    var contract_rows = csvData.filter(function(row) { return row.segment == contract; });
+  rtn = contracts.map(function(contract) {
+    var contract_rows = csvData.filter(function(row) {
+      return row.segment == contract && row.distance != NaN && row.altitude != NaN; });
     var baseline = d3.min(contract_rows, function(d) { return d.altitude; });
 	  var contract_data = {name: contract, values: null};
 	  contract_data.values = contract_rows.map(function(row) {
@@ -136,8 +138,10 @@ function converter(csvData, field) {
 		    value: row.altitude - baseline // price type
 	    };
 	  });
+
 	  return contract_data;
   });
+  return rtn;
 }
 
 function timestamp() {
