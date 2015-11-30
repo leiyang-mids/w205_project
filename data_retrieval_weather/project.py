@@ -23,9 +23,12 @@ owm = pyowm.OWM('b4d6a45357444bb50ea559bb93971d50')
 conn = psycopg2.connect(user="postgres", password="pass", host="localhost", port="5432")
 for i in cities:
     print cities[i]['name']
-    if isAscii(cities[i]['name']) == True:
-           weather = {} 
-           observation = owm.weather_at_place(cities[i]['name'])
+    if isAscii(cities[i]['name']) == True and cities[i]['countrycode'] == 'US':
+           weather = {}
+           try:
+               observation = owm.weather_at_place(cities[i]['name'])
+           except ValueError:
+               print "Error in time"
            w = observation.get_weather()
            weather['city'] = cities[i]['name']
            weather['date'] = time.strftime("%d/%m/%Y")
@@ -37,8 +40,15 @@ for i in cities:
            weather['wind']= str(w.get_wind())
            weather['snow']= str(w.get_snow())
            weather['rain']=str(w.get_rain())
-           weather['sunrise_time']=w.get_sunrise_time()
-           weather['sunset_time']=w.get_sunset_time()
+           try:
+               weather['sunrise_time']=w.get_sunrise_time()
+           except ValueError:
+               print "Error in time"
+           try:
+               weather['sunset_time']=w.get_sunset_time()
+           except ValueError:
+               print "Error in time"
+           #weather['sunset_time']=0
            weather['status']=w.get_detailed_status()
            weather['weather_cd']=w.get_weather_code()
            weather['visibility_distance']=w.get_visibility_distance()
@@ -62,7 +72,7 @@ for i in cities:
     else:
           print 'Not a ascii city:',cities[i]['name']
 #          break
-
+conn.close()
 
  
  
