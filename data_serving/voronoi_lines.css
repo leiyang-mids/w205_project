@@ -29,7 +29,7 @@ svg {
 }
 
 .city--hover {
-  stroke: #000;
+  stroke: red;  /* #000; */
 }
 
 .focus text {

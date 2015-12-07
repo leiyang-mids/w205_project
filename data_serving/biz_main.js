@@ -3,7 +3,7 @@ var plot_data, query_data;
 // send HQL to hive - string HQL input
 function initialize() {
   var HQL = 'select distinct state from m_segment order by state';
-  console.log('Start query states: ' + HQL)
+  console.log('Start querying states: ' + HQL)
   $.ajax({
     type: "GET",
     url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
@@ -18,7 +18,7 @@ function initialize() {
 
 function getCategories() {
   var HQL = 'select distinct category from m_segment where category in (0,1,2,3,4,5) order by category';
-  console.log('Start query categories: ' + HQL)
+  console.log('Start querying categories: ' + HQL)
   $.ajax({
     type: "GET",
     url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
@@ -33,7 +33,7 @@ function getCategories() {
 
 function getCities() {
   var HQL = "select distinct concat(city, ', ', state) as c from m_segment order by c";
-  console.log('Start query cities: ' + HQL)
+  console.log('Start querying cities: ' + HQL)
   $.ajax({
     type: "GET",
     url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
@@ -42,6 +42,7 @@ function getCities() {
      // get return
      cities = output;
      console.log('City HQL completed with ' + output.length + ' rows.');
+     getLeaderboard();
      populateDropdowns()
   });
 }
@@ -79,11 +80,11 @@ function populateDropdowns() {
 }
 
 function refreshData() {
-  var HQL = "select seg.name, str.distance, str.altitude \
+  var HQL = "select seg.name, str.distance, str.altitude, seg.id \
     from m_stream str join m_segment seg on str.seg_id = seg.id \
     where seg.state = '" + $('#state').val() + "' and seg.category = " + $('#category').val()
     + " order by name, distance";
-  console.log('Start query stream altitude: ' + HQL)
+  console.log('Start querying stream altitude: ' + HQL)
   $.ajax({
     type: "GET",
     url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
@@ -93,6 +94,34 @@ function refreshData() {
      stream = output;
      console.log('Stream altitude HQL completed with ' + output.length + ' rows.');
      refreshChart();
+  });
+}
+
+function getLeaderboard() {  
+  var HQL = 'select s.name, l.athlete_name, l.athlete_gender, l.moving_time, l.average_hr, l.rank \
+    from m_leaderboard l join m_segment s on l.seg_id=s.id';
+  console.log('Start querying leaderboard info: ' + HQL);
+  $.ajax({
+    type: "GET",
+    url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
+    data: { hql: HQL }
+  }).done(function(output) {
+     // get return
+     leaderboard = output;
+     console.log('Stream leaderboard HQL completed with ' + output.length + ' rows.');
+     // get the js array to populate table
+     leaderboard = leaderboard.map(function(r) { return r.row.split('|'); });
+     table = $('#leaderboard').DataTable( {
+             data: leaderboard,
+             columns: [
+                 { title: "Segment" },
+                 { title: "Athlete" },
+                 { title: "Gender" },
+                 { title: "Time" },
+                 { title: "Avg. Heartrate" },
+                 { title: "Rank" }
+             ]
+      } );
   });
 }
 
@@ -107,10 +136,13 @@ function refreshChart() {
     return {
       segment: columns[0],
       distance: +columns[1],
-      altitude: +columns[2]
+      altitude: +columns[2],
+      seg_id: columns[3]
     }
   });
   console.log('complete sorting data ...');
+  // plot and populate table
   plot_voronoi(csvData, 'dummy');
+
 }
 //----------------------- biz logic -------------------------

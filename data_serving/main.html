@@ -5,12 +5,14 @@
   <title>Path Finder</title>
   <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
   <link rel="stylesheet" href="voronoi_lines.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.10/css/jquery.dataTables.min.css">
   <script src="https://code.jquery.com/jquery-2.0.3.js"></script>
   <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/queue-async/1.0.7/queue.min.js"></script>
   <script src="voronoi_lines.js"></script>
   <script src="biz_main.js"></script>
+  <script src="https://cdn.datatables.net/1.10.10/js/jquery.dataTables.min.js"></script>
 
   <script>
   $(function() {
@@ -80,11 +82,13 @@
 <label for="category">Select a category</label>
 <select name="category" id="category"></select>
 
-<button type="button" class="home">Refresh Chart</button>
+<button type="button" id="refresh">Refresh Chart</button><br>
+
+<!--<table id="leaderboard" class="display" width="100%"> </table>-->
 
 <script>
 // first and foremost
-var host = '54.174.84.97'; //<the AWS host ip>;
+var host = '54.152.106.69'; //<the AWS host ip>;
 
 //----------------------- viz components -------------------------
 
@@ -94,7 +98,8 @@ var host = '54.174.84.97'; //<the AWS host ip>;
 // populate state, city, category dropdowns
 // TODO: you can see there are all kinds crap in the data: cleaning is a huge deal
 initialize();
-var svg = d3.select('body').append("svg").attr('id', 'voronoi');
+d3.select('body').append("svg").attr('id', 'voronoi');
+d3.select('body').append('table').attr('id', 'leaderboard');
 
 //----------------------- initialization -------------------------
 
@@ -119,21 +124,21 @@ function newEndDate() {
 
 $('#state').on('selectmenuchange', function() {
   //alert($('#state').val());
-  refreshData();
+  //refreshData();
 });
 
 $('#category').on('selectmenuchange', function() {
   //alert($('#state').val());
-  refreshData();
+  //refreshData();
 });
 
 $('#city').on('selectmenuchange', function() {
   //alert($('#state').val());
-  refreshData();
+  //refreshData();
 });
 
-$('button.home').click(function(){
-
+$('#refresh').click(function(){
+  refreshData();
 });
 //----------------------- event handlers -------------------------
 </script>

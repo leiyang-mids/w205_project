@@ -113,12 +113,14 @@ function plot_voronoi(csv_data, price) {
 	highlight_segment = d.city.name;
     focus.attr("transform", "translate(" + x(d.date) + "," + y(d.value) + ")");
     focus.select("text").text(d.city.name);
+    table.columns(0).search(d.city.name).draw();
   }
 
   function mouseout(d) {
     d3.select(d.city.line).classed("city--hover", false);
-	highlight_segment = "";
+	  highlight_segment = "";
     focus.attr("transform", "translate(-100,-100)");
+    table.columns(0).search('').draw();
   }
   $("body").css("cursor", "default");
   console.log(timestamp() + ': finish plotting');
@@ -137,7 +139,7 @@ function converter(csvData, field) {
 	    return {
 	      city: contract_data,
 		    date: row.distance/1609.34, // in miles
-		    value: row.altitude - baseline // price type
+		    value: row.altitude  // - baseline
 	    };
 	  });
 
