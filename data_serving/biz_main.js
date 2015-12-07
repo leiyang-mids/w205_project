@@ -27,7 +27,9 @@ function getCategories() {
      // get return
      categories = output;
      console.log('Category HQL completed with ' + output.length + ' rows.');
-     getCities();
+     //getCities();
+     getLeaderboard();
+     populateDropdowns();
   });
 }
 
@@ -51,7 +53,7 @@ function populateDropdowns() {
   console.log('start refreshing dropdowns.')
   // clear first
   $('#state').empty();
-  $('#city').empty();
+  //$('#city').empty();
   $('#category').empty();
   // populate
   $.each(states, function(i, v) {
@@ -60,12 +62,14 @@ function populateDropdowns() {
       .attr('value', v.row.trim())
       .text(v.row.trim()));
   });
+  /*
   $.each(cities, function(i, v) {
     $('#city')
       .append($("<option></option>")
       .attr('value', v.row.trim())
       .text(v.row.trim()));
   });
+  */
   $.each(categories, function(i, v) {
     $('#category')
       .append($("<option></option>")

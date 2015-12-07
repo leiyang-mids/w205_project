@@ -5,9 +5,9 @@ function plot_voronoi(csv_data, price) {
   $("body").css("cursor", "progress");
   //highlight_segment;
 
- var margin = {top: 20, right: 30, bottom: 30, left: 40},
+ var margin = {top: 20, right: 30, bottom: 50, left: 40},
   	width = 960 - margin.left - margin.right,
-  	height = 500 - margin.top - margin.bottom;
+  	height = 518 - margin.top - margin.bottom;
 
   var x = d3.scale.linear().range([0, width]);
   var y = d3.scale.linear().range([height, 0]);
@@ -53,7 +53,11 @@ function plot_voronoi(csv_data, price) {
       .attr("transform", "translate(0," + height + ")")
       .call(d3.svg.axis()
         .scale(x)
-        .orient("bottom"));
+        .orient("bottom"))
+        .append('text')
+        .attr('transform', 'translate(398,33)')
+        .style('font-weight', 'bold')
+        .text('Distance(mile)');
 
   svg.append("g")
       .attr("class", "axis axis--y")
