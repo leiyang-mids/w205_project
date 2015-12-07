@@ -84,7 +84,8 @@
 
 <button type="button" id="refresh">Refresh Chart</button><br>
 
-<!--<table id="leaderboard" class="display" width="100%"> </table>-->
+<div id='chartHolder'></div><br>
+<table id="leaderboard" class="display" width="100%"> </table>
 
 <script>
 // first and foremost
@@ -98,8 +99,7 @@ var host = '54.152.106.69'; //<the AWS host ip>;
 // populate state, city, category dropdowns
 // TODO: you can see there are all kinds crap in the data: cleaning is a huge deal
 initialize();
-d3.select('body').append("svg").attr('id', 'voronoi');
-d3.select('body').append('table').attr('id', 'leaderboard');
+d3.select('#chartHolder').append("svg").attr('id', 'voronoi');
 
 //----------------------- initialization -------------------------
 
@@ -140,6 +140,16 @@ $('#city').on('selectmenuchange', function() {
 $('#refresh').click(function(){
   refreshData();
 });
+
+$('#chartHolder').click(function() {
+  console.log('searching leaderboard for ' + highlight_segment);
+  table.columns(0).search(highlight_segment).draw();
+});
+
+$('#leaderboard').click(function() {
+  table.columns(0).search('').draw();
+});
+
 //----------------------- event handlers -------------------------
 </script>
 

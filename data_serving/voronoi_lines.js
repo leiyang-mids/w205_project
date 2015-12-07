@@ -3,7 +3,7 @@ function plot_voronoi(csv_data, price) {
 
   console.log(timestamp() + ': start plotting ...');
   $("body").css("cursor", "progress");
-  var highlight_segment;
+  //highlight_segment;
 
  var margin = {top: 20, right: 30, bottom: 30, left: 40},
   	width = 960 - margin.left - margin.right,
@@ -25,7 +25,7 @@ function plot_voronoi(csv_data, price) {
 
   // remove previous one then add
   d3.select('#voronoi').remove();
-  svg = d3.select('body').append("svg").attr('id', 'voronoi')
+  svg = d3.select('#chartHolder').append("svg").attr('id', 'voronoi')
    .attr("width", width + margin.left + margin.right)
    .attr("height", height + margin.top + margin.bottom)
    .append("g")
@@ -113,14 +113,12 @@ function plot_voronoi(csv_data, price) {
 	highlight_segment = d.city.name;
     focus.attr("transform", "translate(" + x(d.date) + "," + y(d.value) + ")");
     focus.select("text").text(d.city.name);
-    table.columns(0).search(d.city.name).draw();
   }
 
   function mouseout(d) {
     d3.select(d.city.line).classed("city--hover", false);
 	  highlight_segment = "";
-    focus.attr("transform", "translate(-100,-100)");
-    table.columns(0).search('').draw();
+    focus.attr("transform", "translate(-100,-100)");    
   }
   $("body").css("cursor", "default");
   console.log(timestamp() + ': finish plotting');

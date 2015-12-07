@@ -97,7 +97,7 @@ function refreshData() {
   });
 }
 
-function getLeaderboard() {  
+function getLeaderboard() {
   var HQL = 'select s.name, l.athlete_name, l.athlete_gender, l.moving_time, l.average_hr, l.rank \
     from m_leaderboard l join m_segment s on l.seg_id=s.id';
   console.log('Start querying leaderboard info: ' + HQL);
@@ -122,6 +122,7 @@ function getLeaderboard() {
                  { title: "Rank" }
              ]
       } );
+      table.columns(0).search('!@#%$#%$$%#^%&^$&*').draw();
   });
 }
 
