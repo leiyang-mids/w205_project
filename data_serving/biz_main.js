@@ -72,10 +72,6 @@ function populateDropdowns() {
       .attr('value', v.row.trim())
       .text(v.row.trim()));
   });
-  // refresh
-  $('#state').selectmenu('refresh');
-  $('#city').selectmenu('refresh');
-  $('#category').selectmenu('refresh');
   console.log('dropdown refreshing components.')
 }
 
@@ -144,6 +140,5 @@ function refreshChart() {
   console.log('complete sorting data ...');
   // plot and populate table
   plot_voronoi(csvData, 'dummy');
-
 }
 //----------------------- biz logic -------------------------

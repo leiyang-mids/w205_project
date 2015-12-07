@@ -10,8 +10,6 @@ function plot_voronoi(csv_data, price) {
   	height = 500 - margin.top - margin.bottom;
 
   var x = d3.scale.linear().range([0, width]);
-  //var x = d3.time.scale().range([0, width]);
-
   var y = d3.scale.linear().range([height, 0]);
 
   var voronoi = d3.geom.voronoi()
@@ -42,7 +40,7 @@ function plot_voronoi(csv_data, price) {
   // bind data
   console.log(timestamp() + ': start converting data ...');
   cities = converter(csv_data, price);
-  console.log(timestamp() + ': finish converting data ...');
+  console.log(timestamp() + ': finish converting data');
 
   // get days
   var days = $(cities).map(function() { return this.values.map(function(r) { return r.date; }); });
@@ -101,12 +99,8 @@ function plot_voronoi(csv_data, price) {
       .datum(function(d) { return d.point; })
       .on("mouseover", mouseover)
       .on("mouseout", mouseout);
-  console.log(timestamp() + ': finish building voronoi mesh ...');
-/*
-  d3.select("#show-voronoi")
-      .property("disabled", false)
-      .on("change", function() { voronoiGroup.classed("voronoi--show", this.checked); });
-*/
+  console.log(timestamp() + ': finish building voronoi mesh');
+
   function mouseover(d) {
     d3.select(d.city.line).classed("city--hover", true);
     d.city.line.parentNode.appendChild(d.city.line);
@@ -118,7 +112,7 @@ function plot_voronoi(csv_data, price) {
   function mouseout(d) {
     d3.select(d.city.line).classed("city--hover", false);
 	  highlight_segment = "";
-    focus.attr("transform", "translate(-100,-100)");    
+    focus.attr("transform", "translate(-100,-100)");
   }
   $("body").css("cursor", "default");
   console.log(timestamp() + ': finish plotting');
