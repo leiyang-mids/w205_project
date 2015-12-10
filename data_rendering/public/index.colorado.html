@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Fitmap Application</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/style.css">
+
+    <!-- Include Google Maps JS API -->
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKsmk1qf9pWvWmaAdbFv3jGRBLw-16dR0&sensor=false&libraries=visualization"></script>
+    <script type="text/javascript" src="keydragzoom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+    <style type="text/css">
+    html { height: 100% }
+    body { height: 100%; margin: 0; }
+    #mapDiv { width: 100%; height: 100%; }
+    </style>
+
+    <!-- Map creation is here -->
+    <script type="text/javascript">
+        //Defining map as a global variable to access from //other functions
+    /*globals google d3*/
+var map;
+    function initMap() {
+        //Enabling new cartography and themes
+        google.maps.visualRefresh = true;
+
+        //Setting starting options of map
+
+        var mapOptions = {
+          center: new google.maps.LatLng(30.2671500, -97.7430600),
+          zoom: 10,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          panControl: true,
+          scaleControl: false,
+          zoomControl: true,
+          zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.SMALL
+          },
+          overviewMapControl: true,
+          overviewMapControlOptions: {
+            opened: true
+          },
+          mapTypeControl: true,
+          mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID],
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+          }
+        };
+
+        //Getting map DOM element
+        var mapElement = document.getElementById('mapDiv');
+
+        //Creating a map with DOM element which is just //obtained
+        map = new google.maps.Map(mapElement, mapOptions);
+        //create the heatmap layer
+        var heatmapPoints = [];
+        //30.2671500, -97.7430600
+        var austinLat = 30.2671500;
+        var austinLng =-97.7430600;
+
+        for ( var i=0;i < 100;i++) {
+          var latLng = new google.maps.LatLng(austinLat+Math.random()/10,austinLng+Math.random()/10);
+          var weightedLoc = {
+            location:latLng,
+            weight:1*Math.random()
+          };
+          heatmapPoints.push(weightedLoc);
+        }
+        var heatmap = new google.maps.visualization.HeatmapLayer({
+              data: heatmapPoints
+        });
+        //add the heatmap layer to the map
+        heatmap.setMap(map);
+        var bicyclingLayer = new google.maps.BicyclingLayer ();
+        bicyclingLayer.setMap(map);
+
+        map.enableKeyDragZoom({
+    	    visualEnabled: true,
+    	    visualPosition: google.maps.ControlPosition.LEFT,
+    	    visualPositionOffset: new google.maps.Size(35, 0),
+    	    visualPositionIndex: null,
+    	    visualSprite: 'http://maps.gstatic.com/mapfiles/ftr/controls/dragzoom_btn.png',
+    	    visualSize: new google.maps.Size(20, 20),
+    	    visualTips: {
+    	        off: "Turn on",
+    	        on: "Turn off"
+    	    }
+    	  });
+        var dz = map.getDragZoomObject();
+        google.maps.event.addListener(dz, 'dragstart', function (latlng) {
+          console.log('KeyDragZoom Started: ' + latlng);
+        });
+        google.maps.event.addListener(dz, 'dragend', function (bnds) {
+          console.log('KeyDragZoom Ended: ' + bnds);
+        });
+        //Add the logo
+        var logoDiv = document.createElement("div");
+        var logoPic = document.createElement("img");
+        logoPic.src = "images/Fitmap.png";
+        logoPic.id = "fitLogo";
+        logoPic.style.height = '100px';
+        logoPic.style.width = '100px';
+
+        logoDiv.appendChild(logoPic);
+        map.controls[google.maps.ControlPosition.RIGHT_TOP].push(logoDiv);
+
+      }
+      google.maps.event.addDomListener(window, 'load', initMap);
+
+
+	</script>
+
+  </head>
+
+  <body>
+    <b>Fitness Map for Austin, TX </b>
+    <div id="mapDiv"></div>
+    
+    
+    <div id="Chart">
+
+     <style>
+	  .chart {
+	    height: 70px;
+	    width: 300px;
+	    border-bottom: 1px solid #ccc;
+	    display: block;
+	    margin: 1em;
+	  }
+	  .chart .bar {
+	    fill: #ccc;
+	  }
+	</style>
+	
+  <script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var parseDate = d3.time.format("%d-%b-%y").parse;
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+.scale(y)
+.orient("left");
+
+var line = d3.svg.line()
+.x(function(d) { return x(d.date); })
+.y(function(d) { return y(d.close); });
+
+var svg = d3.select("body").append("svg")
+.attr("width", width + margin.left + margin.right)
+.attr("height", height + margin.top + margin.bottom)
+.append("g")
+.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("data.csv", function(error, data) {
+if (error) throw error;
+
+data.forEach(function(d) {
+d.date = parseDate(d.date);
+d.close = +d.close;
+});
+
+x.domain(d3.extent(data, function(d) { return d.date; }));
+y.domain(d3.extent(data, function(d) { return d.close; }));
+
+ $('[data-bar-chart]').each(function (i, svg) {
+    var $svg = $(svg);
+    var data = $svg.data('data').split(',').map(function (datum) {
+      return parseFloat(datum);
+    });
+    var barWidth = parseFloat($svg.data('bar-width')) || 15;
+    var barSpace = parseFloat($svg.data('bar-space')) || 0.5;
+    var chartHeight = $svg.outerHeight();
+    var y = d3.scale.linear()
+              .domain([0, d3.max(data)])
+              .range([0, chartHeight]);
+    d3.select(svg)
+      .selectAll("rect")
+        .data(data)
+      .enter().append("rect")
+        .attr("class", "bar")
+        .attr("width", barWidth)
+        .attr("x", function (d, i) { return barWidth*i + barSpace*i; })
+        .attr("y", chartHeight)
+        .attr("height", 0)
+        .transition()
+        .delay(function (d, i) { return i*100; })
+        .attr("y", function (d, i) { return chartHeight-y(d); })
+        .attr("height", function (d) { return y(d); });
+  });
+
+
+});
+
+</script>
+</div>
+
+</body>
+
+</html>

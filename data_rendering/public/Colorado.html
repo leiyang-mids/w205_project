@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Fitmap Application</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/style.css">
+
+    <!-- Include Google Maps JS API -->
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKsmk1qf9pWvWmaAdbFv3jGRBLw-16dR0&sensor=false&libraries=visualization"></script>
+    <script type="text/javascript" src="keydragzoom.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <style type="text/css">
+    html { height: 100% }
+    body { height: 100%; margin: 0; }
+    #mapDiv { width: 100%; height: 100%; }
+    </style>
+
+    <!-- Map creation is here -->
+    <script type="text/javascript">
+        //Defining map as a global variable to access from //other functions
+    /*globals google firstLatLng:true*/
+/*eslint-env jquery */
+var map;
+    function initMap() {
+        //Enabling new cartography and themes
+        google.maps.visualRefresh = true;
+
+     
+        //Setting starting options of map at colorado
+        var myLat=38.883956
+        var myLng=-107.552172
+
+        var mapOptions = {
+          center: new google.maps.LatLng(myLat, myLng),
+          zoom: 10,
+          mapTypeId: google.maps.MapTypeId.ROADMAP,
+          panControl: true,
+          scaleControl: false,
+          zoomControl: true,
+          zoomControlOptions: {
+            style: google.maps.ZoomControlStyle.SMALL
+          },
+          overviewMapControl: true,
+          overviewMapControlOptions: {
+            opened: true
+          },
+          mapTypeControl: true,
+          mapTypeControlOptions: {
+            mapTypeIds: [google.maps.MapTypeId.ROADMAP, google.maps.MapTypeId.HYBRID],
+            style: google.maps.MapTypeControlStyle.DROPDOWN_MENU
+          }
+        };
+
+        //Getting map DOM element
+        var mapElement = document.getElementById('mapDiv');
+
+        //Creating a map with DOM element which is just //obtained
+        map = new google.maps.Map(mapElement, mapOptions);
+        //create the heatmap layer
+        var heatmapPoints = [];
+        // Read the Json file for locations
+        $.getJSON('colorado.json', function (data) {
+          var locations =data.locations;
+          var location, latLng;
+          firstLatLng=locations[0];
+          for (var i=0;i<locations.length; i++) {
+            location = locations[i];
+            latLng =new google.maps.LatLng(location.latitude,location.longitude);
+            var weightedLoc = {
+              location:latLng,
+              weight:0.5*Math.random()
+            };
+            heatmapPoints.push(weightedLoc);
+          }
+        })
+        var heatmap = new google.maps.visualization.HeatmapLayer({
+              data: heatmapPoints
+        });
+        
+
+        //add the heatmap layer to the map
+        heatmap.setMap(map);
+        var bicyclingLayer = new google.maps.BicyclingLayer ();
+        bicyclingLayer.setMap(map);
+
+        map.enableKeyDragZoom({
+    	    visualEnabled: true,
+    	    visualPosition: google.maps.ControlPosition.LEFT,
+    	    visualPositionOffset: new google.maps.Size(35, 0),
+    	    visualPositionIndex: null,
+    	    visualSprite: 'http://maps.gstatic.com/mapfiles/ftr/controls/dragzoom_btn.png',
+    	    visualSize: new google.maps.Size(20, 20),
+    	    visualTips: {
+    	        off: "Turn on",
+    	        on: "Turn off"
+    	    }
+    	  });
+        
+      }
+      google.maps.event.addDomListener(window, 'load', initMap);
+
+
+	</script>
+
+  </head>
+
+  <body>
+    <b>Fitness Map for Colorado </b>
+    <div id="mapDiv"></div>
+  </body>
+
+</html>

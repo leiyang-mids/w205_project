@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>Fitmap Application</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="stylesheets/style.css">
+
+    <!-- Include Google Maps JS API -->
+    <script type="text/javascript"
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBKsmk1qf9pWvWmaAdbFv3jGRBLw-16dR0&sensor=false&libraries=visualization"></script>
+    <script type="text/javascript" src="keydragzoom.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <style type="text/css">
+    html { height: 100% }
+    body { height: 100%; margin: 0; }
+    #mapDiv { width: 100%; height: 100%; }
+    #floating-panel {
+      position: absolute;
+      top: 10px;
+      left: 10%;
+      z-index: 5;
+      background-color: #fff;
+      padding: 5px;
+      border: 1px solid #999;
+      text-align: center;
+      font-family: 'Roboto','sans-serif';
+      line-height: 30px;
+      padding-left: 10px;
+    }
+    #floating-panel2 {
+      position: absolute;
+      top: 10px;
+      left: 80%;
+      z-index: 5;
+      background-color: #fff;
+      padding: 5px;
+      border: 1px solid #999;
+      text-align: center;
+      font-family: 'Roboto','sans-serif';
+      line-height: 30px;
+      padding-left: 10px;
+    }
+    #floating-panel3 {
+	  position: absolute;
+	  bottom: 10px;
+	  left: 30%;
+	  z-index: 5;
+	  background-color: #fff;
+	  padding: 5px;
+	  border: 1px solid #999;
+	  text-align: center;
+	  font-family: 'Roboto','sans-serif';
+	  line-height: 30px;
+	  padding-left: 10px;
+    }
+
+    #floating-panel3 {
+        background-color: #fff;
+	border: 1px solid #999;
+	left: 35%;
+	padding: 5px;
+	position: absolute;
+	bottom: 10px;
+	z-index: 5;
+    }
+    </style>
+
+    <!-- Map creation is here -->
+    <script type="text/javascript" src="mymap.js"></script>
+    <script>
+	    google.maps.event.addDomListener(window, 'load', initMap);
+    </script>
+
+  </head>
+
+    <div id="floating-panel">
+      <input id="address" type="textbox" value="San Jose, CA">
+      <input id="submit" type="button" value="Geocode">
+    </div>
+    <div id="floating-panel3">
+      <button onclick="toggleHeatmap()">Toggle Heatmap</button>
+      <button onclick="changeGradient()">Change gradient</button>
+      <button onclick="changeRadius()">Change radius</button>
+      <button onclick="changeOpacity()">Change opacity</button>
+    </div>
+
+    <div id="floating-panel2">
+         <select id="selectid" name="segment"> </select>
+      <input id="submit2" type="button" value="segment">
+    </div>
+    <div id="mapDiv"></div>
+  </body>
+
+</html>
