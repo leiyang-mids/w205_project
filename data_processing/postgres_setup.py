@@ -35,7 +35,7 @@ print 'table segment is successfully created!'
 cur.execute('DROP TABLE IF EXISTS leaderboard')
 conn.commit()
 cur.execute('''CREATE TABLE leaderboard
-       (id TEXT PRIMARY KEY     NOT NULL,
+       (id TEXT     NOT NULL,
        rank INT,
        average_hr decimal,
        average_watts decimal,
