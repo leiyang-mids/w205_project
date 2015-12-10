@@ -6,4 +6,10 @@
       1.  Bicycle routes
       1. Zooming with selection
       1. Heat map toggle and color coding
+      
+## How to set on a server 
+    * start the httop server using :
+         python -m SimpleHTTPServer 8000
+    * view the rendering using firefox or other browser supporting jquery at 8000 port as follow
+    *   use the web address: localhost:8000 or server_public_IP:8000
 
