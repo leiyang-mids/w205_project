@@ -1,4 +1,4 @@
-Strava data retrieval module
+### Strava data retrieval module
 
 1. main.py - set location square for a city on line 32, for lower-left (1) and upper-right (2) points.
 2. 4 CSV files are saved after main execution:
