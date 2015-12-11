@@ -110,7 +110,7 @@ function plot_voronoi(csv_data, price) {
     d.city.line.parentNode.appendChild(d.city.line);
 	highlight_segment = d.city.name;
     focus.attr("transform", "translate(" + x(d.date) + "," + y(d.value) + ")");
-    focus.select("text").text(d.city.name);
+    focus.select("text").text(d.city.name + ' ('+d.cnt+')');
   }
 
   function mouseout(d) {
@@ -135,7 +135,8 @@ function converter(csvData, field) {
 	    return {
 	      city: contract_data,
 		    date: row.distance/1609.34, // in miles
-		    value: row.altitude  // - baseline
+		    value: row.altitude,  // - baseline
+        cnt: row.cnt
 	    };
 	  });
 

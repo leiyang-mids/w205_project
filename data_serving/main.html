@@ -17,14 +17,15 @@
 <!--Select a city: <select id="city"></select>-->
 Select a State: <select id='state'></select>
 Select a category: <select id='category'></select>
-<button type="button" id="refresh">Refresh Chart</button><br>
+<button type="button" id="refresh">History Segments</button>
+<button type='button' id='popular'>Popular Segments</button><br>
 
 <div id='chartHolder'></div><br>
 <table id="leaderboard" class="display" width="100%"> </table>
 
 <script>
 // first and foremost
-var host = '54.152.106.69'; //<the AWS host ip>;
+var host = '52.90.150.84'; //<the AWS host ip>;
 var highlight_segment;
 
 
@@ -38,7 +39,11 @@ d3.select('#chartHolder').append("svg").attr('id', 'voronoi');
 
 //----------------------- event handlers -------------------------
 $('#refresh').click(function(){
-  refreshData();
+  refresh_data_hive();
+});
+
+$('#popular').click(function(){
+  refresh_data_pg();
 });
 
 $('#chartHolder').click(function() {

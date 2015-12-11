@@ -62,14 +62,6 @@ function populateDropdowns() {
       .attr('value', v.row.trim())
       .text(v.row.trim()));
   });
-  /*
-  $.each(cities, function(i, v) {
-    $('#city')
-      .append($("<option></option>")
-      .attr('value', v.row.trim())
-      .text(v.row.trim()));
-  });
-  */
   $.each(categories, function(i, v) {
     $('#category')
       .append($("<option></option>")
@@ -79,12 +71,12 @@ function populateDropdowns() {
   console.log('dropdown refreshing components.')
 }
 
-function refreshData() {
-  var HQL = "select seg.name, str.distance, str.altitude, seg.id \
+function refresh_data_hive() {
+  var HQL = "select seg.name, str.distance, str.altitude, seg.id, seg.effort_count \
     from m_stream str join m_segment seg on str.seg_id = seg.id \
     where seg.state = '" + $('#state').val() + "' and seg.category = " + $('#category').val()
     + " order by name, distance";
-  console.log('Start querying stream altitude: ' + HQL)
+  console.log('Start querying Hive stream altitude: ' + HQL)
   $.ajax({
     type: "GET",
     url: "http://" + host + ":8330/cgi-bin/HQL_SELECT.py",
@@ -93,6 +85,28 @@ function refreshData() {
      // get return
      stream = output;
      console.log('Stream altitude HQL completed with ' + output.length + ' rows.');
+     refreshChart();
+  });
+}
+
+function refresh_data_pg() {
+  var SQL = "select seg.name, str.distance, str.altitude, seg.id, seg.effort_count \
+    from stream str join segment seg on str.id = seg.id \
+    where seg.state = '" + $('#state').val() + "' and seg.category = '" + $('#category').val()
+    + "' order by name, distance";
+  console.log('Start querying Postgres stream altitude: ' + SQL)
+  $.ajax({
+    type: "GET",
+    url: "http://" + host + ":8330/cgi-bin/SQL_SELECT.py",
+    data: { sql: SQL }
+  }).done(function(output) {
+     // get return
+     stream = output;
+     console.log('Stream altitude SQL completed with ' + output.length + ' rows.');
+     if (output.length == 0) {
+       alert('No category ' + $('#category').val() + ' segment found in ' + $('#state').val())
+       return;
+     }
      refreshChart();
   });
 }
@@ -114,7 +128,7 @@ function getLeaderboard() {
      table = $('#leaderboard').DataTable( {
              data: leaderboard,
              columns: [
-                 { title: "Segment" },
+                 { title: "Segment" },                 
                  { title: "Athlete" },
                  { title: "Gender" },
                  { title: "Time" },
@@ -138,7 +152,8 @@ function refreshChart() {
       segment: columns[0],
       distance: +columns[1],
       altitude: +columns[2],
-      seg_id: columns[3]
+      seg_id: columns[3],
+      cnt: columns[4]
     }
   });
   console.log('complete sorting data ...');
