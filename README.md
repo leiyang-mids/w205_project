@@ -1,12 +1,13 @@
 # MIDS W205 Project
 
-### Data Ingestion (as w205 user)
+### Data Ingestion
 1. Strava data is extracted via Strava API and stored as csv on S3.
 2. To load the files, navigate to data_transfer_ingestion folder, and execute shell script: load_data_lake.sh
 3. To create Hive external table for initial exploration, execute SQL script: hive -f hive_base_ddl.sql
 4. An example log file is uploaded in the folder to illustrate a successful ingestion process.
 
 File description:
+
 1. main.py - set location square for a city on line 32, for lower-left (1) and upper-right (2) points.
 2. 4 CSV files are saved after main execution:
 3. activities.csv      - activity summary from the leader board
@@ -23,6 +24,7 @@ File description:
 5. Execute hive -f hive_activity_ddl.sql to create managed table for activity data of segment.
 
 File description:
+
 1. convert_stream.py - convert stream data to wide mode
 2. load_data_lake.sh - download csv files from S3, call script above, and load files into HDFS
 3. hive_base_ddl.sql - create external table in Hive for initial exploration
@@ -48,6 +50,7 @@ File description:
   - javascript runs asynchronously, thus please be cautious when sending AJAX query and make sure multiple queries (if necessary) are sent sequentially.
 
 Additional Notes:
+
 1. logon to Postgres, as w205: psql –U postgres
 2. connect to Postgres DB: \c '[database_name]'
 
