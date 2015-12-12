@@ -20,13 +20,10 @@
 1. For demo, we have retrieved history data via *Strava API* and stored the csv files on S3.
 2. under **/data_transfer_ingestion**, load data lake:
 <pre><code># ./load_data_lake.sh</code></pre>
-
-3. under **/data_transfer_ingestion**, create Hive external table for initial exploration:       
-<pre><code># hive -f hive_base_ddl.sql</code></pre>
-4. An example log file is uploaded in the folder to illustrate a successful ingestion process.
+3. An example log file is uploaded in the folder to illustrate a successful ingestion process.
 
 #### Data Transfer
-1. under **/data_transfer_ingestion**, create external tables in Hive for initial exploration:
+1. under **/data_transfer_ingestion**, create Hive external table for initial exploration:       
 <pre><code># hive -f hive_base_ddl.sql</code></pre>
 2. under **/data_transfer_ingestion**, create managed tables for segment meta data, leaderboard data, segment geo location data, and activity data:
 <pre><code>
@@ -44,22 +41,28 @@
 
 
 #### Data Serving
-1. under the home of root, create a **cgi-bin** directory:
+1. under home of root, create a **cgi-bin** directory:
 <pre><code>
  # cd ~
  # mkdir cgi-bin
 </code></pre>
-2. under **/data_serving**, copy **HQL_SELECT.py** and **SQL_SELECT.py** to **~/cgi-bin** folder and make them executable:
+2. under **/data_serving**, copy **HQL_SELECT.py** and **SQL_SELECT.py** to **~/cgi-bin** directory and make them executable:
 <pre><code>
  # cp *_SELECT.py ~/cgi-bin/
  # cd ~/cgi-bin
  # chmod +x *_SELECT.py      
 </code></pre>
-3. start hiveserver2:
-<pre><code># hive --service hiveserver2</code></pre>
-4. under the home of root, start Python CGI service:
-<pre><code># python -m CGIHTTPServer 8330</code></pre>
-5. insert your AWS IP into line: <code>var host = {the AWS host ip}</code> of **main.html**;
+3. under home of root, start hiveserver2:
+<pre><code>
+ # cd ~
+ # hive --service hiveserver2
+</code></pre>
+4. in another bash window, under home of root, start Python CGI service:
+<pre><code>
+ # cd ~
+ # python -m CGIHTTPServer 8330
+</code></pre>
+5. insert your AWS IP into line: <code>var host = {host ip}</code> of **main.html**;
 6. query server is ready to accept request, and note:
   - hiveserver2 can only handle one query at time, sending a new one before the previous complete will cause issue
   - javascript runs asynchronously, thus please be cautious when sending AJAX query and make sure multiple queries (if necessary) are sent sequentially.
