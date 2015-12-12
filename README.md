@@ -41,7 +41,7 @@ File description:
 2. install hiveserver2, and make sure Hive is running properly
 3. install pyhs2 library: pip install pyhs2
 4. create a directory cgi-bin under the home of root: mkdir cgi-bin
-5. copy HQL_SELECT.py and SQL_SELECT.py to ~/cgi-bin folder (cp *QL_*.py ~/cgi-bin/), and make it executable: chmod +x *QL_*.py
+5. copy HQL_SELECT.py and SQL_SELECT.py to ~/cgi-bin folder (cp \*_SELECT.py ~/cgi-bin/), and make it executable: chmod +x \*.py
 6. as root, start hiveserver2: hive --service hiveserver2
 7. as root, under the home directory (~), start Python CGI service: python -m CGIHTTPServer 8330
 8. insert your AWS IP into line: var host = '<the AWS host ip>' of main.html;
