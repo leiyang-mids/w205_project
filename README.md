@@ -10,18 +10,19 @@
 2. Python, Postgres, Hive, and hiveserver2 are installed and properly configured
 3. The following Python libraries are installed:
 <pre><code>
-       # pip install pyhs2
-       # pip install pyhs2
-       # pip install psycopg2
-       # pip install stravalib
+ # pip install pyhs2
+ # pip install pyhs2
+ # pip install psycopg2
+ # pip install stravalib
 </code></pre>
 
 #### Data Ingestion (as W205)
 1. For demo, we have retrieved history data via *Strava API* and stored the csv files on S3.
 2. under **/data_transfer_ingestion**, load data lake:
-       # ./load_data_lake.sh
+<pre><code># ./load_data_lake.sh
+
 3. under **/data_transfer_ingestion**, create Hive external table for initial exploration:       
-       # hive -f hive_base_ddl.sql
+<pre><code># hive -f hive_base_ddl.sql
 4. An example log file is uploaded in the folder to illustrate a successful ingestion process.
 
 #### Data Transfer
