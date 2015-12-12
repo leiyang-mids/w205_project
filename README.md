@@ -9,10 +9,12 @@
 1. Port 8330 is open for communication
 2. Python, Postgres, Hive, and hiveserver2 are installed and properly configured
 3. The following Python libraries are installed:
+<pre><code>
        # pip install pyhs2
        # pip install pyhs2
        # pip install psycopg2
        # pip install stravalib
+</code></pre>
 
 #### Data Ingestion (as W205)
 1. For demo, we have retrieved history data via *Strava API* and stored the csv files on S3.
