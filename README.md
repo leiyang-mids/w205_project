@@ -1,6 +1,6 @@
 # MIDS W205 Project
 
-### Data Ingestion
+### Data Ingestion (as W205)
 1. Strava data is extracted via Strava API and stored as csv on S3.
 2. To load the files, navigate to data_transfer_ingestion folder, and execute shell script: load_data_lake.sh
 3. To create Hive external table for initial exploration, execute SQL script: hive -f hive_base_ddl.sql
