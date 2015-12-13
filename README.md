@@ -74,14 +74,20 @@ Job completed!
  $ cd ~
  $ python -m CGIHTTPServer 8330
 </code></pre>
-5. insert your AWS IP into line: <code>var host = {host ip}</code> of **main.html**;
-6. query server is ready to accept request, and note:
+5. edit **main.html**, insert your AWS IP into line: <code>var host = {host ip}</code>
+6. as w205, under **/data_serving**, copy the website scripts to home:
+<code><pre>
+$ cp main.html ~/index.html
+$ cp *.js ~/
+$ cp *.css ~/
+</code></pre>
+5. AWS host is now ready to accept query request, but note:
   - hiveserver2 can only handle one query at time, sending a new one before the previous complete will cause issue
   - javascript runs asynchronously, thus please be cautious when sending AJAX query and make sure multiple queries (if necessary) are sent sequentially.
 
 #### Data Visualization
-1. A simple html page (**main.html**) is made to navigate results, user can:
-  - it takes 2 minutes initializing the page, to populate the dropdowns. The speed here needs improvement
+1. Open a browser, type in <aws_ip>:8330 in the address bar, to navigate results:
+  - it takes ~2 minutes initializing the page, to populate the dropdowns. The speed here needs improvement
   - filter segment based on state and category
   - visualize history segment with data from Hive, or popular segment with data from Postgres
   - during the Visualization process, both CGI and hiveserver2 should show query process, and the browser console also has log to indicate the data transfer.
