@@ -86,7 +86,7 @@ $ cp *.css ~/
   - javascript runs asynchronously, thus please be cautious when sending AJAX query and make sure multiple queries (if necessary) are sent sequentially.
 
 #### Data Visualization
-1. Open a browser, type in <aws_ip>:8330 in the address bar, to navigate results:
+1. Open a browser, type in <code>host_ip:8330</code> in the address bar, to navigate results:
   - it takes ~2 minutes initializing the page, to populate the dropdowns. The speed here needs improvement
   - filter segment based on state and category
   - visualize history segment with data from Hive, or popular segment with data from Postgres
