@@ -10,10 +10,10 @@
 2. HDFS, Python, Postgres, Hive, and hiveserver2 are installed and properly configured
 3. the following Python libraries are installed:
 <pre><code>
- # pip install pyhs2
- # pip install pyhs2
- # pip install psycopg2
- # pip install stravalib
+$ pip install pyhs2
+$ pip install pyhs2
+$ pip install psycopg2
+$ pip install stravalib
 </code></pre>
 4. below directories exist on the system:
  - file:///data
@@ -32,10 +32,10 @@
 <pre><code>$ hive -f hive_base_ddl.sql</code></pre>
 2. as w205, under **/data_transfer_ingestion**, create managed tables for segment meta data, leaderboard data, segment geo location data, and activity data:
 <pre><code>
- $ hive -f hive_segment_ddl.sql
- $ hive -f hive_leaderboard_ddl.sql
- $ hive -f hive_stream_ddl.sql
- $ hive -f hive_activity_ddl.sql
+$ hive -f hive_segment_ddl.sql
+$ hive -f hive_leaderboard_ddl.sql
+$ hive -f hive_stream_ddl.sql
+$ hive -f hive_activity_ddl.sql
 </code></pre>
 
 #### Data Processing
@@ -43,8 +43,8 @@
 <pre><code>$ python postgres_setup.py</code></pre>
 3. in another bash window, as w205, under home directory **~**, start hiveserver2:
 <pre><code>
- $ cd ~
- $ hive --service hiveserver2
+$ cd ~
+$ hive --service hiveserver2
 </code></pre>
 2. as w205, under **/data_processing**, extract 30 most popular segment for each category in every state, and store the stream and meta data in Postgres (this step take several minutes):
 <pre><code>$ python job.py</code></pre>
@@ -60,19 +60,19 @@ Job completed!
 #### Data Serving
 1. as w205, in another bash window, under home, create a **cgi-bin** directory:
 <pre><code>
- $ cd ~
- $ mkdir cgi-bin
+$ cd ~
+$ mkdir cgi-bin
 </code></pre>
 2. under **/data_serving**, copy **HQL_SELECT.py** and **SQL_SELECT.py** to **~/cgi-bin** directory and make them executable:
 <pre><code>
- $ cp *_SELECT.py ~/cgi-bin/
- $ cd ~/cgi-bin
- $ chmod +x *_SELECT.py      
+$ cp *_SELECT.py ~/cgi-bin/
+$ cd ~/cgi-bin
+$ chmod +x *_SELECT.py      
 </code></pre>
 4. as w205, under home, start Python CGI service:
 <pre><code>
- $ cd ~
- $ python -m CGIHTTPServer 8330
+$ cd ~
+$ python -m CGIHTTPServer 8330
 </code></pre>
 5. edit **main.html**, insert your AWS IP into line: <code>var host = {host ip}</code>
 6. as w205, under **/data_serving**, copy the website scripts to home:
