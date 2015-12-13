@@ -2,7 +2,7 @@
 ## MIDS W205 Final Project, Fall 2015
 ## Lei Yang | Nilesh Bhoyar | Tuhin Mahmud
 
-### Project Presentation: [link](https://docs.google.com/presentation/d/1pim14yNgvikb0B_u9qBCHCCKgfz6F1oQElEXCFS8BZs/edit?usp=sharing)
+[Presentation](https://docs.google.com/presentation/d/1pim14yNgvikb0B_u9qBCHCCKgfz6F1oQElEXCFS8BZs/edit?usp=sharing) | [Report](https://docs.google.com/document/d/1Re0OAcl693crMTo4GkVPOpoh8rliut2znPDM0IlNpRE/edit?usp=sharing)
 
 ### Deployment Guide
 #### System Requirement
