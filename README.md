@@ -1,5 +1,5 @@
-# Path Finder - A Segment Search Tool Based on Strava Data
-## MIDS W205 Final Project, Fall 2015
+# Path Finder - A cycling data analytic tool using Apache Hive
+### MIDS W205 Final Project, Fall 2015
 ## Lei Yang | Nilesh Bhoyar | Tuhin Mahmud
 
 [Presentation](https://docs.google.com/presentation/d/1pim14yNgvikb0B_u9qBCHCCKgfz6F1oQElEXCFS8BZs/edit?usp=sharing) | [Report](https://docs.google.com/document/d/1FVOKB-6Q32uH4-GNqpf_DmkC7-OXr4Tz5N_NgpyRvPg/edit?usp=sharing)
