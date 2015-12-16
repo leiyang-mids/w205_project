@@ -11,7 +11,6 @@
 3. the following Python libraries are installed:
 <pre><code>
 $ pip install pyhs2
-$ pip install pyhs2
 $ pip install psycopg2
 $ pip install stravalib
 </code></pre>
